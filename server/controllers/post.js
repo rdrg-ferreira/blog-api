@@ -9,8 +9,6 @@ export async function getAllPosts(req, res) {
 const validatePost = [
     body("title")
         .trim()
-        .isAlphanumeric()
-        .withMessage("Title must be alphanumeric")
         .isLength({ min: 3, max: 100 })
         .withMessage("Title must have between 3 and 100 characters"),
     body("text")
@@ -18,16 +16,13 @@ const validatePost = [
         .isLength({ min: 3, max: 1000 })
         .withMessage("Text must have between 3 and 1000 characters"),
     body("status")
-        .custom((value) => {
-            return value in ["PUBLIC", "PRIVATE"];
-        })
+        .isIn(["PUBLIC", "PRIVATE"])
         .withMessage("That option is invalid"),
 ];
 
 export const createPost = [
     validatePost,
     async (req, res) => {
-        // TODO: review this after jwt
         if (!req.user) {
             return res.status(401).json({ error: "You need to be logged in to access this resource"});
         }

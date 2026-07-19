@@ -17,7 +17,6 @@ const validateComment = [
 export const createComment = [
     validateComment,
     async (req, res) => {
-        // TODO: review this after jwt
         if (!req.user) {
             return res.status(401).json({ error: "You need to be logged in to access this resource"});
         }
