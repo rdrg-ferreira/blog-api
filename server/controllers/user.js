@@ -1,16 +1,6 @@
 import db from "../db/queries.js";
 import { body, validationResult, matchedData } from "express-validator";
-import passport from "../passport/passport.js";
 import { hash } from "bcryptjs";
-
-export function getIndex(req, res) {
-    // if (!req.user) return res.redirect("/log-in");
-    res.render("index");
-}
-
-export function getSignUpPage(req, res) {
-    res.render("signUpForm");
-}
 
 const validateUser = [
     body("username")
@@ -37,46 +27,44 @@ const validateUser = [
 export const createUser = [
     validateUser,
     async (req, res) => {
-        if (req.user) return res.redirect("/");
+        if (req.user) {
+            return res.status(403).json({ error: "You need to logout before creating a new user"});
+        }
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).render("signUpForm", { errors: errors.array() });
+            return res.status(400).json({ errors: errors.array() });
         }
 
         const { username, password } = matchedData(req);
         const hashedPassword = await hash(password, 10);
         const user = await db.createUser(username, hashedPassword);
-        res.redirect("/log-in");
+        res.status(201).json(user);
     },
 ];
 
-export function getLogInPage(req, res) {
-    const loginMessage = req.session.messages?.[0];
-    let loginErrorField = "password";
+export async function getUser(req, res) {
+    const { id } = req.params;
+    const user = await db.getUser({id});
+    res.json(user);
+}
 
-    if (loginMessage === "Incorrect username") {
-        loginErrorField = "username";
+export async function updateUserRole(req, res) {
+    // TODO: review this after jwt
+    if (!req.user) {
+        return res.status(401).json({ error: "You need to be logged in to access this resource"});
     }
 
-    res.render("logInForm", {
-        loginMessage,
-        loginErrorField,
-    });
-    req.session.messages = undefined;
-}
+    if (req.user.role !== "ADMIN") {
+        return res.status(403).json({ error: "You need to have Admin role to access this resource"});
+    }
 
-export function logInUser(req, res, next) {
-    return passport.authenticate("local", {
-        successRedirect: "/",
-        failureRedirect: "/log-in",
-        failureMessage: true,
-    })(req, res, next);
-}
+    const { id } = req.params;
+    const user = await db.getUser({id});
+    if (!user) {
+        return res.status(404).json({ error: "The id provided does not belong to a user"});
+    }
 
-export function logOutUser(req, res, next) {
-    req.logout((err) => {
-        if (err) return next(err);
-        res.redirect("/");
-    });
+    const updatedUser = await db.updateUserRole(id);
+    res.json(updatedUser);
 }
