@@ -29,7 +29,12 @@ async function updateUserRole(id) {
 }
 
 async function getAllPosts() {
-    return await prisma.post.findMany();
+    return await prisma.post.findMany({
+        include: { 
+            author: { select: { username: true  } },
+            _count: { select: { comments: true } }
+        }
+    });
 }
 
 async function createPost(title, text, authorId, status) {
@@ -45,7 +50,10 @@ async function createPost(title, text, authorId, status) {
 
 async function getCommentsFromPost(postId) {
     return await prisma.comment.findMany({
-        where: { postId: postId },
+        where: { postId: Number(postId) },
+        include: { 
+            author: { select: { username: true  } }
+        }
     });
 }
 
@@ -55,6 +63,9 @@ async function createComment(text, authorId, postId) {
             text: text,
             authorId: Number(authorId),
             postId: Number(postId),
+        }
+        ,include: {
+            author: { select: { username: true } }
         }
     });
 }

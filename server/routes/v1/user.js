@@ -4,7 +4,7 @@ import passport from "../../passport/passport.js";
 
 const router = Router();
 
-router.post("/", passport.authenticate("jwt", { session: false }), createUser);
+router.post("/", createUser);
 router.get("/:id", getUser);
 router.put("/:id/role", passport.authenticate("jwt", { session: false }), updateUserRole);
 

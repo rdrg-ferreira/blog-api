@@ -1,0 +1,59 @@
+import { useState } from "react";
+import { useOutletContext } from "react-router";
+import { useNavigate } from "react-router";
+import FormInput from "./FormInput";
+import authFetch from "../lib/authFetch";
+
+export default function LoginPage() {
+    const { currentUser, setCurrentUser } = useOutletContext();
+    const navigate = useNavigate();
+    const [errors, setErrors] = useState([]);
+
+    async function handleSubmit(event) {
+        event.preventDefault();
+        setErrors([]);
+
+        const formData = new FormData(event.currentTarget);
+        const payload = Object.fromEntries(formData.entries());
+
+        const response = await authFetch("/api/v1/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            setErrors(data.errors);
+            return;
+        }
+
+        localStorage.setItem("token", data.token);
+        setCurrentUser(data.user);
+        navigate("/");
+    }
+
+    if (currentUser) {
+        return (
+            <main>
+                <h1 className="information">You are already logged in. You can log out from the menu if you want to switch accounts</h1>
+            </main>
+        );
+    } else {
+        return (
+            <main>
+                <div className="form-card">
+                    <h1>Welcome back</h1>
+                    <form onSubmit={handleSubmit}>
+                        <FormInput type={"text"} id={"username"} labelName={"Username"} errorMsg={errors.find(e => e.path === "username")?.msg} ></FormInput>
+                        <FormInput type={"password"} id={"password"} labelName={"Password"} errorMsg={errors.find(e => e.path === "password")?.msg} ></FormInput>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+            </main>
+        );
+    }
+}
