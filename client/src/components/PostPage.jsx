@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import FormInput from "./FormInput";
 import { formatDistanceToNow } from 'date-fns';
 import authFetch from "../lib/authFetch";
+import "../styles/PostPage.css";
+import "../styles/globalStyle.css";
 
 function Comment({ comment }) {
     const timeAgo = formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true });
@@ -71,14 +73,14 @@ export default function PostPage() {
 
     if (!post) {
         return (
-            <main>
+            <main className="post-page">
                 <h1 className="information">Loading post...</h1>
             </main>
         );
     }
 
     return (
-        <main>
+        <main className="post-page">
             <span className="title">{post.title}</span>
             <span className="author">by {post.author.username}</span>
             <span className="text">{post.text}</span>
@@ -92,8 +94,8 @@ export default function PostPage() {
                     <p>Login to comment</p>
                 )}
             </div>
-            <div className="container">
-                <h2>Comments</h2>
+            <h2>Comments</h2>
+            <div className="container comments-list">
                 {comments.map(comment => (
                     <Comment key={comment.id} comment={comment}></Comment>
                 ))}

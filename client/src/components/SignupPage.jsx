@@ -3,6 +3,8 @@ import { useOutletContext } from "react-router";
 import { useNavigate } from "react-router";
 import FormInput from "./FormInput";
 import authFetch from "../lib/authFetch";
+import "../styles/LoginPage.css";
+import "../styles/globalStyle.css";
 
 export default function SignupPage() {
     const { currentUser } = useOutletContext();

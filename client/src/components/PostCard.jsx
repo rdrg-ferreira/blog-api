@@ -1,5 +1,7 @@
 import { Link } from "react-router";
 import { formatDistanceToNow } from 'date-fns';
+import "../styles/PostCard.css";
+import "../styles/globalStyle.css";
 
 export default function PostCard({ id, author, createdAt, title, text, numComments }) {
     const timeAgo = formatDistanceToNow(new Date(createdAt), { addSuffix: true });

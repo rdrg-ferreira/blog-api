@@ -6,7 +6,18 @@ export function loginUser(req, res, next) {
     passport.authenticate("local", { session: false }, (err, user, info) => {
         if (err) return next(err);
         
-        if (!user) return res.status(401).json({ error: info.message });
+        if (!user) {
+            const path = info.message === "Incorrect password" ? "password" : "username";
+
+            return res.status(401).json({
+                errors: [
+                    {
+                        path,
+                        msg: info.message,
+                    },
+                ],
+            });
+        }
 
         const token = jwt.sign(
             { user }, 

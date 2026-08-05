@@ -1,6 +1,8 @@
 import PostCard from "./PostCard";
 import { useOutletContext } from "react-router";
 import { useState } from 'react';
+import "../styles/MainLayout.css";
+import "../styles/globalStyle.css";
 
 export default function MainLayout() {
     const { posts } = useOutletContext();

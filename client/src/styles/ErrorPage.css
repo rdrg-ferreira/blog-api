@@ -1,0 +1,8 @@
+.information a {
+    color: var(--accent-strong);
+    font-weight: 700;
+}
+
+.information a:hover {
+    text-decoration: underline;
+}

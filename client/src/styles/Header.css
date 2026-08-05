@@ -1,0 +1,32 @@
+header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    width: min(1120px, calc(100% - 2rem));
+    margin: 1rem auto 0;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
+}
+
+header h1 {
+    letter-spacing: -0.04em;
+    font-size: 1.6rem;
+}
+
+.actions {
+    gap: 0.75rem;
+}
+
+#logout-button {
+    border-color: rgba(180, 35, 24, 0.25);
+    color: var(--danger);
+}
+
+#logout-button:hover {
+    background: rgba(180, 35, 24, 0.08);
+    border-color: rgba(180, 35, 24, 0.35);
+}

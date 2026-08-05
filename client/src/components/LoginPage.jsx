@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { useOutletContext } from "react-router";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate, useOutletContext } from "react-router";
 import FormInput from "./FormInput";
 import authFetch from "../lib/authFetch";
+import "../styles/LoginPage.css";
+import "../styles/globalStyle.css";
 
 export default function LoginPage() {
     const { currentUser, setCurrentUser } = useOutletContext();
     const navigate = useNavigate();
+    const location = useLocation();
     const [errors, setErrors] = useState([]);
 
     async function handleSubmit(event) {
@@ -27,20 +29,19 @@ export default function LoginPage() {
         const data = await response.json();
 
         if (!response.ok) {
-            setErrors(data.errors);
+            setErrors(data.errors ?? []);
             return;
         }
 
         localStorage.setItem("token", data.token);
         setCurrentUser(data.user);
-        navigate("/");
+        const redirectTo = location.state?.from?.pathname || "/";
+        navigate(redirectTo, { replace: true });
     }
 
     if (currentUser) {
         return (
-            <main>
-                <h1 className="information">You are already logged in. You can log out from the menu if you want to switch accounts</h1>
-            </main>
+            <h1 className="information">You are already logged in. You can log out from the menu if you want to switch accounts</h1>
         );
     } else {
         return (
@@ -48,8 +49,8 @@ export default function LoginPage() {
                 <div className="form-card">
                     <h1>Welcome back</h1>
                     <form onSubmit={handleSubmit}>
-                        <FormInput type={"text"} id={"username"} labelName={"Username"} errorMsg={errors.find(e => e.path === "username")?.msg} ></FormInput>
-                        <FormInput type={"password"} id={"password"} labelName={"Password"} errorMsg={errors.find(e => e.path === "password")?.msg} ></FormInput>
+                        <FormInput type={"text"} id={"username"} labelName={"Username"} errorMsg={errors?.find(e => e.path === "username")?.msg} ></FormInput>
+                        <FormInput type={"password"} id={"password"} labelName={"Password"} errorMsg={errors?.find(e => e.path === "password")?.msg} ></FormInput>
                         <button type="submit">Login</button>
                     </form>
                 </div>
