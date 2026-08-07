@@ -2,23 +2,16 @@
 	gap: 0.65rem;
 }
 
-.post-status legend {
+.post-status label {
 	padding: 0 0.15rem;
 	font-size: 0.95rem;
 	font-weight: 600;
 	color: var(--text);
 }
 
-.status-options {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 0.75rem;
-}
 
-.status-option {
-	display: flex;
-	align-items: center;
-	gap: 0.65rem;
+.post-status select {
+	width: 100%;
 	min-height: 3rem;
 	padding: 0.85rem 1rem;
 	border: 1px solid var(--border);
@@ -28,18 +21,11 @@
 	font-weight: 500;
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 	transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
-	cursor: pointer;
 }
 
-.status-option:hover {
-	transform: translateY(-1px);
-	border-color: rgba(31, 95, 139, 0.3);
-	background: white;
-}
-
-.status-option input {
-	margin: 0;
-	accent-color: var(--accent);
+.post-status select:focus {
+	border-color: rgba(31, 95, 139, 0.45);
+	box-shadow: 0 0 0 4px rgba(31, 95, 139, 0.12);
 }
 
 .form-card button[type="submit"] {
@@ -47,10 +33,6 @@
 }
 
 @media (max-width: 520px) {
-	.status-options {
-		grid-template-columns: 1fr;
-	}
-
 	.form-card button[type="submit"] {
 		width: 100%;
 	}

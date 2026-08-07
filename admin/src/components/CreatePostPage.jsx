@@ -50,20 +50,14 @@ export default function CreatePostPage() {
                 <form onSubmit={handleSubmit}>
                     <FormInput type="text" id="title" labelName="Title" errorMsg={errors?.find((error) => error.path === "title")?.msg} />
                     <FormInput type="textarea" id="text" labelName="Text" errorMsg={errors?.find((error) => error.path === "text")?.msg} />
-                    <fieldset className="input flex flex-column post-status">
-                        <legend>Status</legend>
-                        <div className="status-options">
-                            <label className="status-option">
-                            <input type="radio" name="status" value="PUBLIC" defaultChecked />
-                            Public
-                            </label>
-                            <label className="status-option">
-                            <input type="radio" name="status" value="PRIVATE" />
-                            Private
-                            </label>
-                        </div>
+                    <div className="input flex flex-column post-status">
+                        <label htmlFor="status">Status</label>
+                        <select id="status" name="status" defaultValue="PUBLIC">
+                            <option value="PUBLIC">Public</option>
+                            <option value="PRIVATE">Private</option>
+                        </select>
                         <p className="field-error">{errors?.find((error) => error.path === "status")?.msg ?? ""}</p>
-                    </fieldset>
+                    </div>
                     <button type="submit">Create post</button>
                 </form>
             </div>
