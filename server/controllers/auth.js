@@ -20,7 +20,7 @@ export function loginUser(req, res, next) {
         }
 
         const token = jwt.sign(
-            { user }, 
+            { user: { id: user.id, username: user.username, role: user.role } }, 
             process.env.SESSION_SECRET,
             { expiresIn: "1h" },
         );

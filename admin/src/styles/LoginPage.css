@@ -1,0 +1,48 @@
+.form-card {
+	width: min(560px, 100%);
+	margin: 3rem auto 0;
+	padding: 2rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	background: var(--surface);
+	box-shadow: var(--shadow);
+	backdrop-filter: blur(18px);
+}
+
+.form-card h1 {
+	margin-bottom: 1.5rem;
+	letter-spacing: -0.04em;
+	font-size: 2rem;
+}
+
+.form-card form {
+	display: grid;
+	gap: 1rem;
+}
+
+.form-card button {
+	width: fit-content;
+	border: none;
+	border-radius: 999px;
+	padding: 0.85rem 1.2rem;
+	background: var(--accent);
+	color: white;
+	font-weight: 600;
+	cursor: pointer;
+	transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+	box-shadow: 0 12px 22px rgba(31, 95, 139, 0.2);
+}
+
+.form-card button:hover {
+	transform: translateY(-1px);
+	background: var(--accent-strong);
+}
+
+.form-card button:active {
+	transform: translateY(0);
+}
+
+.auth-message {
+	width: min(720px, 100%);
+	margin: 3rem auto 0;
+}

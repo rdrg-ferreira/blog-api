@@ -9,10 +9,6 @@ export default function MainLayout() {
     const [searchValue, setSearchValue] = useState("");
 
     const filteredPosts = posts.filter(p => {
-        if (p.status !== "PUBLIC") {
-            return false;
-        }
-        
         if (searchValue !== "" && !p.title.toLowerCase().includes(searchValue)) {
             return false;
         }

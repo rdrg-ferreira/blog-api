@@ -10,7 +10,14 @@ import cors from "cors";
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-app.use(cors());
+const corsOptions = {
+    origin: [
+        process.env.CLIENT_FRONTEND_URL,
+        process.env.ADMIN_FRONTEND_URL,
+    ].filter(Boolean),
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));

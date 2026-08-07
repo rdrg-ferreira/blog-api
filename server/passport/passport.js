@@ -7,7 +7,7 @@ import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 passport.use(
     new LocalStrategy(async (username, password, done) => {
         try {
-            const user = await db.getUser({ username });
+            const user = await db.getUserWithPassword({ username });
 
             if (!user) {
                 return done(null, false, { message: "Incorrect username" });

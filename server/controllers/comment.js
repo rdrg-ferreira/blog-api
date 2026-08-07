@@ -33,3 +33,23 @@ export const createComment = [
         res.status(201).json(post);
     },
 ];
+
+export async function deleteComment(req, res) {
+    if (!req.user) {
+        return res.status(401).json({ error: "You need to be logged in to access this resource"});
+    }
+
+    if (req.user.role !== "ADMIN") {
+        return res.status(403).json({ error: "You need to have Admin role to access this resource"});
+    }
+
+    const { id } = req.params;
+    const comment = await db.getCommentById(id);
+
+    if (!comment) {
+        return res.status(404).json({ error: "Comment not found" });
+    }
+
+    await db.deleteComment(id);
+    res.status(204).send();
+}

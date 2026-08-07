@@ -2,7 +2,11 @@ import db from "../db/queries.js";
 import { body, validationResult, matchedData } from "express-validator";
 
 export async function getAllPosts(req, res) {
-    const posts = await db.getAllPosts();
+    if (req.user && req.user.role === "ADMIN") {
+        const posts = await db.getAllPosts();
+        return res.json(posts);
+    }
+    const posts = await db.getAllPublicPosts();
     res.json(posts);
 }
 
@@ -42,3 +46,30 @@ export const createPost = [
         res.status(201).json(post);
     },
 ];
+
+export async function updatePostStatus(req, res) {
+    if (!req.user) {
+        return res.status(401).json({ error: "You need to be logged in to access this resource"});
+    }
+
+    if (req.user.role !== "ADMIN") {
+        return res.status(403).json({ error: "You need to have Admin role to access this resource"});
+    }
+
+    const { id } = req.params;
+    const post = await db.getPostById(id);
+
+    if (!post) {
+        return res.status(404).json({ error: "Post not found" });
+    }
+
+    const newStatus = post.status === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC';
+
+    try {
+        const updatedPost = await db.updatePostStatus(newStatus, id);
+        res.json(updatedPost);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "An error occurred while updating the post status" });
+    }
+}
