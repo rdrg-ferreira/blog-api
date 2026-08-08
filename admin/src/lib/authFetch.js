@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "";
+const API_BASE = import.meta.env.VITE_API_PROXY_TARGET || "";
 
 export default async function authFetch(url, options = {}) {
     const token = localStorage.getItem("token");
