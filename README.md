@@ -33,7 +33,7 @@ Follow these steps to get a local copy of the project up and running.
     ```sh
     git clone https://github.com/rdrg-ferreira/blog-api
     ```
-2. Install packages (do it server, client and admin subfolders)
+2. Install packages (do it on the server, client and admin subfolders)
    ```sh
    npm install
    ```
