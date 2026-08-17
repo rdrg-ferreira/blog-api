@@ -2,7 +2,7 @@
 
 A fullstack Blog Application built with [Express.js][express-url], [PostgreSQL][postgresql-url] and [React][react-url].
 
-![Main Page](./screenshots/main.png)
+![Usage Example](./readme_assets/example.gif)
 
 ## Overview
 
@@ -11,6 +11,8 @@ This app provides 2 different frontends depending on the type of person using it
 All of this data is stored on a [PostgreSQL][postgresql-url] database, which can be accessed by using the API endpoints. While some are available to everyone, others are protected to only registered users or even admins. 
 
 The app uses the [CORS middleware][cors-url] to restrict access to the API from other origins except the 2 frontends and [JWT Tokens][jwt-url] to authenticate users.
+
+![Main Page](./readme_assets/main.png)
 
 ### Built With
 
