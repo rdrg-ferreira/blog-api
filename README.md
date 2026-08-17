@@ -2,7 +2,9 @@
 
 A fullstack Blog Application built with [Express.js][express-url], [PostgreSQL][postgresql-url] and [React][react-url].
 
-![Usage Example](./readme_assets/example.gif)
+<video autoplay loop muted>
+  <source src="./readme_assets/example.mp4" type="video/mp4">
+</video>
 
 ## Overview
 
