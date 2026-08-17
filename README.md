@@ -12,8 +12,6 @@ All of this data is stored on a [PostgreSQL][postgresql-url] database, which can
 
 The app uses the [CORS middleware][cors-url] to restrict access to the API from other origins except the 2 frontends and [JWT Tokens][jwt-url] to authenticate users.
 
-![Main Page](./readme_assets/main.png)
-
 ### Built With
 
 [![Express][express-shield]][express-url] &nbsp; 
